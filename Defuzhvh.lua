@@ -4067,3 +4067,363 @@ print(" Visuals     : Loaded")
 print(" Movement    : Loaded")
 print(" Misc        : Loaded")
 print("=================================")
+
+--// =========================================
+--// TEMP FUNCTION CONTROLLER
+--// Добавить в самый конец
+--// =========================================
+
+local TempController = Instance.new("Frame")
+TempController.Name = "TempController"
+TempController.Parent = Gui
+TempController.Size = UDim2.fromOffset(210, 360)
+TempController.Position = UDim2.new(1, -225, 0.5, -180)
+TempController.BackgroundColor3 = Colors.Panel
+TempController.BorderSizePixel = 0
+TempController.ZIndex = 50
+
+local TempCorner = Instance.new("UICorner")
+TempCorner.CornerRadius = UDim.new(0, 12)
+TempCorner.Parent = TempController
+
+local TempStroke = Instance.new("UIStroke")
+TempStroke.Color = Colors.Purple
+TempStroke.Thickness = 1
+TempStroke.Transparency = 0.25
+TempStroke.Parent = TempController
+
+-- TITLE
+
+local TempTitle = Instance.new("TextLabel")
+TempTitle.Parent = TempController
+TempTitle.BackgroundTransparency = 1
+TempTitle.Size = UDim2.new(1, -20, 0, 35)
+TempTitle.Position = UDim2.fromOffset(10, 5)
+TempTitle.Text = "TEMP CONTROLLER"
+TempTitle.TextColor3 = Colors.Text
+TempTitle.TextSize = 14
+TempTitle.Font = Enum.Font.GothamBold
+TempTitle.TextXAlignment = Enum.TextXAlignment.Left
+TempTitle.ZIndex = 51
+
+-- SCROLL
+
+local TempScroll = Instance.new("ScrollingFrame")
+TempScroll.Parent = TempController
+TempScroll.Position = UDim2.fromOffset(8, 45)
+TempScroll.Size = UDim2.new(1, -16, 1, -53)
+TempScroll.BackgroundTransparency = 1
+TempScroll.BorderSizePixel = 0
+TempScroll.ScrollBarThickness = 3
+TempScroll.CanvasSize = UDim2.fromOffset(0, 0)
+TempScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+TempScroll.ZIndex = 51
+
+local TempLayout = Instance.new("UIListLayout")
+TempLayout.Parent = TempScroll
+TempLayout.Padding = UDim.new(0, 6)
+TempLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+
+--// BUTTON CREATOR
+
+local function TempButton(Name, GetState, SetState)
+
+	local Button = Instance.new("TextButton")
+	Button.Parent = TempScroll
+	Button.Size = UDim2.new(1, -4, 0, 34)
+	Button.BackgroundColor3 = Colors.Panel2
+	Button.BorderSizePixel = 0
+	Button.Text = ""
+	Button.AutoButtonColor = false
+	Button.ZIndex = 52
+
+	local Corner = Instance.new("UICorner")
+	Corner.CornerRadius = UDim.new(0, 8)
+	Corner.Parent = Button
+
+	local Text = Instance.new("TextLabel")
+	Text.Parent = Button
+	Text.BackgroundTransparency = 1
+	Text.Position = UDim2.fromOffset(10, 0)
+	Text.Size = UDim2.new(1, -20, 1, 0)
+	Text.TextXAlignment = Enum.TextXAlignment.Left
+	Text.TextSize = 12
+	Text.Font = Enum.Font.GothamMedium
+	Text.ZIndex = 53
+
+	local function Update()
+
+		local Enabled = GetState()
+
+		if Enabled then
+			Text.Text = Name .. "  [ON]"
+			Text.TextColor3 = Colors.Text
+			Button.BackgroundColor3 = Colors.Purple
+		else
+			Text.Text = Name .. "  [OFF]"
+			Text.TextColor3 = Colors.SubText
+			Button.BackgroundColor3 = Colors.Panel2
+		end
+
+	end
+
+	Button.MouseButton1Click:Connect(function()
+
+		SetState(not GetState())
+		Update()
+
+	end)
+
+	Button.MouseEnter:Connect(function()
+
+		TweenService:Create(
+			Button,
+			TweenInfo.new(0.1),
+			{
+				BackgroundTransparency = 0.15
+			}
+		):Play()
+
+	end)
+
+	Button.MouseLeave:Connect(function()
+
+		TweenService:Create(
+			Button,
+			TweenInfo.new(0.1),
+			{
+				BackgroundTransparency = 0
+			}
+		):Play()
+
+	end)
+
+	Update()
+
+	return Button
+
+end
+
+
+--// =========================================
+--// COMBAT
+--// =========================================
+
+TempButton(
+	"Aim Assist",
+	function()
+		return Config.Combat.AimAssist
+	end,
+	function(Value)
+		Config.Combat.AimAssist = Value
+	end
+)
+
+TempButton(
+	"Triggerbot",
+	function()
+		return Config.Combat.Triggerbot
+	end,
+	function(Value)
+		Config.Combat.Triggerbot = Value
+	end
+)
+
+TempButton(
+	"Auto Shoot",
+	function()
+		return Config.Combat.AutoShoot
+	end,
+	function(Value)
+		Config.Combat.AutoShoot = Value
+	end
+)
+
+TempButton(
+	"Recoil Control",
+	function()
+		return Config.Combat.RecoilControl
+	end,
+	function(Value)
+		Config.Combat.RecoilControl = Value
+	end
+)
+
+
+--// =========================================
+--// VISUALS
+--// =========================================
+
+TempButton(
+	"ESP",
+	function()
+		return Config.Visuals.ESP
+	end,
+	function(Value)
+		Config.Visuals.ESP = Value
+	end
+)
+
+TempButton(
+	"Box ESP",
+	function()
+		return Config.Visuals.Box
+	end,
+	function(Value)
+		Config.Visuals.Box = Value
+	end
+)
+
+TempButton(
+	"Skeleton",
+	function()
+		return Config.Visuals.Skeleton
+	end,
+	function(Value)
+		Config.Visuals.Skeleton = Value
+	end
+)
+
+TempButton(
+	"Tracers",
+	function()
+		return Config.Visuals.Tracers
+	end,
+	function(Value)
+		Config.Visuals.Tracers = Value
+	end
+)
+
+TempButton(
+	"Chams",
+	function()
+		return Config.Visuals.Chams
+	end,
+	function(Value)
+		Config.Visuals.Chams = Value
+	end
+)
+
+TempButton(
+	"FOV Circle",
+	function()
+		return Config.Visuals.FOVCircle
+	end,
+	function(Value)
+		Config.Visuals.FOVCircle = Value
+	end
+)
+
+
+--// =========================================
+--// MOVEMENT
+--// =========================================
+
+TempButton(
+	"Bunny Hop",
+	function()
+		return Config.Movement.BunnyHop
+	end,
+	function(Value)
+		Config.Movement.BunnyHop = Value
+	end
+)
+
+TempButton(
+	"Auto Strafe",
+	function()
+		return Config.Movement.AutoStrafe
+	end,
+	function(Value)
+		Config.Movement.AutoStrafe = Value
+	end
+)
+
+TempButton(
+	"Speed",
+	function()
+		return Config.Movement.Speed
+	end,
+	function(Value)
+		Config.Movement.Speed = Value
+	end
+)
+
+TempButton(
+	"Air Control",
+	function()
+		return Config.Movement.AirControl
+	end,
+	function(Value)
+		Config.Movement.AirControl = Value
+	end
+)
+
+TempButton(
+	"Infinite Jump",
+	function()
+		return Config.Movement.InfiniteJump
+	end,
+	function(Value)
+		Config.Movement.InfiniteJump = Value
+	end
+)
+
+
+--// =========================================
+--// MISC
+--// =========================================
+
+TempButton(
+	"FOV Changer",
+	function()
+		return Config.Misc.FOV
+	end,
+	function(Value)
+		Config.Misc.FOV = Value
+	end
+)
+
+TempButton(
+	"Third Person",
+	function()
+		return Config.Misc.ThirdPerson
+	end,
+	function(Value)
+		Config.Misc.ThirdPerson = Value
+	end
+)
+
+TempButton(
+	"Hit Marker",
+	function()
+		return Config.Misc.HitMarker
+	end,
+	function(Value)
+		Config.Misc.HitMarker = Value
+	end
+)
+
+TempButton(
+	"FPS",
+	function()
+		return Config.Misc.FPS
+	end,
+	function(Value)
+		Config.Misc.FPS = Value
+	end
+)
+
+TempButton(
+	"Ping",
+	function()
+		return Config.Misc.Ping
+	end,
+	function(Value)
+		Config.Misc.Ping = Value
+	end
+)
+
+
+print("TEMP CONTROLLER LOADED")
